@@ -1,0 +1,16 @@
+
+
+<%= form_for(:user, path: root_path, method: :get) do |f| %>
+<p><%= f.label :user_id %></p>
+<p><%= f.text_field :user_id %></p>
+<%= f.submit "Search for Photos" %>
+<% end %>
+<p>
+<% unless params[:user].nil? %>
+  <% user_id = params[:user][:user_id] %>
+  <% photos = flickr.people.getPublicPhotos :user_id => user_id %>
+  <% photos.each do |photo| %>
+    </p><%= image_tag "https://farm#{photo.farm}.staticflickr.com/#{photo.server}/#{photo.id}_#{photo.secret}.jpg" %></p>
+  <% end %>
+<% end %>
+</p>
